@@ -11,7 +11,7 @@ jobs:
       contents: read
       # npm trusted publishing (OIDC) — no NPM_TOKEN secret needed.
       # One-time setup on npmjs.com: package Settings → Trusted publishing →
-      # GitHub Actions → repo nakagater/nakag-ui, workflow release.yml.
+      # GitHub Actions → repo NakaGater/nakag-ui, workflow release.yml.
       id-token: write
     steps:
       - uses: actions/checkout@v4
