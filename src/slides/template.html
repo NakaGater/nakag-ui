@@ -1,0 +1,58 @@
+<!doctype html>
+<!--
+  nakag-ui slide template.
+
+  Stylesheet options:
+    1. Local (this file next to slide.css):    <link rel="stylesheet" href="./slide.css">
+    2. CDN (pin the version so old decks never restyle themselves):
+       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@nakagater/ui@0.1.0/dist/slides/slide.css">
+    3. Fully offline single file: paste the contents of slide.css into a <style> tag.
+
+  Dark deck: <html lang="ja" class="dark">
+  Navigation: scroll / PageDown. Print → "Save as PDF" gives a 16:9 deck.
+-->
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>nakag-ui slides</title>
+    <link rel="stylesheet" href="./slide.css" />
+  </head>
+  <body class="deck">
+    <section class="slide slide--title">
+      <p class="slide-kicker">nakag-ui slides</p>
+      <h1>スライドタイトル</h1>
+      <p class="muted">サブタイトル — 2026-07-17</p>
+      <p class="slide-footer">@nakagater</p>
+    </section>
+
+    <section class="slide">
+      <p class="slide-kicker">Section</p>
+      <h2>2カラムレイアウト</h2>
+      <div class="cols-2 fill">
+        <div class="card">
+          <h3>ポイント 1</h3>
+          <ul>
+            <li>本文は 1em がベースサイズ</li>
+            <li>見出し・余白はスライド幅に比例して拡縮</li>
+            <li><code>class="dark"</code> でダークデッキ</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>ポイント 2</h3>
+          <p>
+            カードは <span class="accent">デザイントークン</span>
+            (色・角丸・影) をそのまま使うので、アプリと同じ見た目になる。
+          </p>
+          <blockquote>引用やコードブロックもこのまま書ける。</blockquote>
+        </div>
+      </div>
+      <div class="notes">ここはスピーカーノート。画面にも印刷にも出ない。</div>
+    </section>
+
+    <section class="slide slide--center">
+      <h1>まとめ</h1>
+      <p class="muted">ブラウザの印刷 → PDF保存で 16:9 の資料になります</p>
+    </section>
+  </body>
+</html>

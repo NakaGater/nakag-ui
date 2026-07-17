@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # npm trusted publishing (OIDC) — no NPM_TOKEN secret needed.
+      # One-time setup on npmjs.com: package Settings → Trusted publishing →
+      # GitHub Actions → repo nakagater/nakag-ui, workflow release.yml.
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint && pnpm typecheck && pnpm build && pnpm check:pkg
+      # npm >= 11.5 required for OIDC trusted publishing
+      - run: npm install -g npm@latest
+      - run: npm publish --access public

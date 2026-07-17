@@ -1,0 +1,303 @@
+/*
+ * nakag-ui slides — framework-free 16:9 slide deck stylesheet.
+ *
+ * Vanilla CSS only (enforced by scripts/build-css.mjs). The published
+ * dist/slides/slide.css has tokens.css inlined, so it is a single file
+ * with zero imports — link it, or paste it into a <style> tag.
+ *
+ * Usage:
+ *   <body class="deck">
+ *     <section class="slide slide--title"> ... </section>
+ *     <section class="slide"> ... </section>
+ *   </body>
+ *
+ * Scaling model: .slide gets a font-size of 2% of the slide width
+ * (viewport-fitted on screen, fixed 1280x720 in print), and everything
+ * inside is sized in em. 1em ≈ body text, so plain markup just works.
+ * Dark deck: <html class="dark">.
+ */
+@import "../styles/tokens.css";
+
+/* ---------- deck ---------- */
+
+html:has(.deck) {
+  scroll-snap-type: y mandatory;
+}
+
+.deck {
+  margin: 0;
+  padding: 0;
+  background: var(--muted);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  counter-reset: slide;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- slide page ---------- */
+
+.slide {
+  position: relative;
+  box-sizing: border-box;
+  width: min(100vw, calc(100vh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  margin-inline: auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 2.6em 3.2em;
+  background: var(--background);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  counter-increment: slide;
+  font-size: calc(min(100vw, 100vh * 16 / 9) * 0.02);
+}
+
+.slide *,
+.slide *::before,
+.slide *::after {
+  box-sizing: border-box;
+}
+
+/* page number (suppressed on title slides) */
+.slide::after {
+  content: counter(slide);
+  position: absolute;
+  right: 1.6em;
+  bottom: 1.1em;
+  font-size: 0.55em;
+  color: var(--muted-foreground);
+}
+
+.slide--title::after,
+.slide--no-number::after {
+  content: none;
+}
+
+/* ---------- slide variants ---------- */
+
+.slide--title {
+  justify-content: center;
+}
+
+.slide--title h1 {
+  font-size: 2.9em;
+  letter-spacing: -0.02em;
+}
+
+.slide--center {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* ---------- typography ---------- */
+
+.slide h1,
+.slide h2,
+.slide h3 {
+  margin: 0 0 0.5em;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.slide h1 {
+  font-size: 2.2em;
+}
+
+.slide h2 {
+  font-size: 1.6em;
+}
+
+.slide h3 {
+  font-size: 1.15em;
+}
+
+.slide p {
+  margin: 0 0 0.7em;
+}
+
+.slide a {
+  color: inherit;
+  text-decoration-color: var(--primary);
+  text-underline-offset: 0.2em;
+}
+
+.slide-kicker {
+  margin: 0 0 0.9em;
+  font-size: 0.65em;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.slide-footer {
+  position: absolute;
+  left: 3.2em;
+  bottom: 1.1em;
+  font-size: 0.55em;
+  color: var(--muted-foreground);
+}
+
+.accent {
+  color: var(--primary);
+}
+
+.muted {
+  color: var(--muted-foreground);
+}
+
+.small {
+  font-size: 0.75em;
+}
+
+/* ---------- lists ---------- */
+
+.slide ul,
+.slide ol {
+  margin: 0 0 0.7em;
+  padding-left: 1.3em;
+}
+
+.slide li {
+  margin-bottom: 0.45em;
+}
+
+.slide ul > li::marker {
+  color: var(--primary);
+}
+
+/* ---------- layout ---------- */
+
+.cols-2,
+.cols-3 {
+  display: grid;
+  gap: 1.4em;
+  align-items: start;
+  min-height: 0;
+}
+
+.cols-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.cols-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.fill {
+  flex: 1;
+  min-height: 0;
+}
+
+.card {
+  padding: 1.1em 1.2em;
+  background: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.card > :last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- content blocks ---------- */
+
+.slide blockquote {
+  margin: 0 0 0.7em;
+  padding: 0.4em 0 0.4em 1em;
+  border-left: 0.18em solid var(--primary);
+  color: var(--muted-foreground);
+}
+
+.slide code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--muted);
+  border-radius: calc(var(--radius) / 2);
+  padding: 0.15em 0.4em;
+}
+
+.slide pre {
+  margin: 0 0 0.7em;
+  padding: 1em 1.2em;
+  overflow: auto;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  line-height: 1.55;
+}
+
+.slide pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.7em;
+}
+
+.slide table {
+  width: 100%;
+  margin: 0 0 0.7em;
+  border-collapse: collapse;
+  font-size: 0.85em;
+}
+
+.slide th,
+.slide td {
+  padding: 0.5em 0.8em;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.slide th {
+  font-weight: 600;
+  color: var(--muted-foreground);
+  border-bottom-color: var(--foreground);
+}
+
+.slide img {
+  max-width: 100%;
+}
+
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+/* speaker notes: kept in markup, never rendered */
+.notes {
+  display: none;
+}
+
+/* ---------- print / PDF ---------- */
+
+@page {
+  size: 1280px 720px;
+  margin: 0;
+}
+
+@media print {
+  html:has(.deck) {
+    scroll-snap-type: none;
+  }
+
+  .deck {
+    background: none;
+  }
+
+  .slide {
+    width: 1280px;
+    height: 720px;
+    font-size: 25.6px;
+    break-after: page;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}

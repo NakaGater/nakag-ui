@@ -1,0 +1,3 @@
+/* Dev-only Tailwind entry (Storybook). Not published. */
+@import "tailwindcss";
+@import "./theme.css";
