@@ -25,5 +25,6 @@ jobs:
         run: |
           head -1 dist/components/ui/dialog.js | grep -q '"use client"'
           head -1 dist/components/ui/select.js | grep -q '"use client"'
+      - run: pnpm test:cli
       - run: pnpm check:pkg
       - run: pnpm build-storybook

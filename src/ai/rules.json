@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "id": "NU001",
+      "category": "color",
+      "severity": "error",
+      "files": ["**/*.{tsx,jsx,ts,js,html}"],
+      "pattern": "(?:text|bg|border|ring|from|via|to|fill|stroke|outline|decoration|shadow|accent|caret)-\\[#[0-9a-fA-F]{3,8}\\]",
+      "description": "任意値のhexカラー(bg-[#...]等)は禁止。デザイントークン外の色はテーマ/ダークモードが壊れる",
+      "alternative": "トークンユーティリティを使う(bg-primary, text-muted-foreground 等)。一覧: node_modules/@nakagater/ui/dist/ai/tokens.json"
+    },
+    {
+      "id": "NU002",
+      "category": "color",
+      "severity": "error",
+      "files": ["**/*.{tsx,jsx,ts,js,html}"],
+      "pattern": "(?:text|bg|border|ring|from|via|to|fill|stroke|outline|decoration|shadow|accent|caret)-\\[(?:oklch|rgba?|hsla?)\\(",
+      "description": "任意値のカラー関数(bg-[oklch(...)]等)は禁止。トークン外の色が混入する",
+      "alternative": "トークンユーティリティを使う(bg-primary 等)"
+    },
+    {
+      "id": "NU003",
+      "category": "color",
+      "severity": "warn",
+      "files": ["**/*.{tsx,jsx}"],
+      "pattern": "(?:bg|text|border|ring)-(?:red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|slate|gray|zinc|neutral|stone)-\\d{2,3}\\b",
+      "description": "Tailwindパレット色(bg-red-500等)はダークモードでトークンに追従しない。チャートやアクセント等の意図的な使用以外は避ける",
+      "alternative": "セマンティックトークン(bg-destructive, text-muted-foreground 等)を優先する"
+    },
+    {
+      "id": "NU010",
+      "category": "import",
+      "severity": "error",
+      "files": ["**/*.{tsx,jsx,ts,js}"],
+      "pattern": "from\\s+[\"']@nakagater/ui/dist/",
+      "description": "dist/配下へのdeep importは禁止。内部構造はバージョン間で保証されない",
+      "alternative": "ルートからimportする: import { Button, cn } from \"@nakagater/ui\""
+    },
+    {
+      "id": "NU020",
+      "category": "wiring",
+      "severity": "error",
+      "files": ["**/*.css"],
+      "type": "missing-pattern",
+      "ifPattern": "@import\\s+[\"']@nakagater/ui/theme\\.css",
+      "mustMatch": "@source\\s+[\"'][^\"']*@nakagater/ui",
+      "description": "theme.cssをimportしているのに@source行がない。Tailwind v4はnode_modulesをスキャンしないため、コンポーネントのCSSが一切生成されない",
+      "alternative": "@source \"../node_modules/@nakagater/ui/dist\"; を追加する(パスはこのCSSファイルからの相対)"
+    },
+    {
+      "id": "NU030",
+      "category": "tailwind",
+      "severity": "error",
+      "files": ["**/*.{tsx,jsx}"],
+      "pattern": "className=\\{\\s*`[^`]*[a-z][\\w-]*-\\$\\{",
+      "description": "クラス名の断片を動的に組み立てている(`bg-${color}`等)。Tailwindはソースを静的スキャンするため、動的クラスのCSSは生成されない",
+      "alternative": "完全なクラス名文字列を条件分岐する: cn(active ? \"bg-primary\" : \"bg-muted\")"
+    },
+    {
+      "id": "NU040",
+      "category": "component",
+      "severity": "warn",
+      "files": ["**/*.{tsx,jsx}"],
+      "pattern": "<(?:Button|Badge)\\b[^>]*className=\"[^\"]*\\b(?:bg|text)-(?:primary|secondary|destructive|accent|muted)\\b",
+      "flags": "s",
+      "description": "Button/BadgeのclassNameでトークン色を上書きしている。variantの見た目とカスタム色が競合する",
+      "alternative": "variant propで切り替える: <Button variant=\"destructive\">。既存variantで足りなければDSにvariantを追加する"
+    },
+    {
+      "id": "NU050",
+      "category": "component",
+      "severity": "warn",
+      "files": ["**/*.{tsx,jsx}"],
+      "pattern": "<(?:button|input|textarea)\\b",
+      "description": "生の<button>/<input>/<textarea>を使っている。DSに対応コンポーネントがある",
+      "alternative": "@nakagater/uiのButton/Input/Textareaを使う(フォーカスリング・ダークモード・無効状態が揃う)"
+    },
+    {
+      "id": "NU060",
+      "category": "a11y",
+      "severity": "error",
+      "files": ["**/*.{tsx,jsx}"],
+      "pattern": "<Button(?![^>]*aria-label)[^>]*size=\"icon",
+      "flags": "s",
+      "description": "アイコンのみのButtonにaria-labelがない(スクリーンリーダーで無名ボタンになる)。※タグ内に'>'を含むpropsがあると検出漏れの可能性あり",
+      "alternative": "<Button size=\"icon\" aria-label=\"追加\"> のようにaria-labelを付ける"
+    },
+    {
+      "id": "NS001",
+      "category": "slides",
+      "severity": "error",
+      "files": ["**/*.html"],
+      "pattern": "cdn\\.jsdelivr\\.net/npm/@nakagater/ui(?!@\\d)",
+      "description": "スライドCSSのCDN URLがバージョン固定されていない。パッケージ更新時に過去資料のデザインが変わってしまう",
+      "alternative": "https://cdn.jsdelivr.net/npm/@nakagater/ui@x.y.z/dist/slides/slide.css のように@x.y.zを固定する"
+    },
+    {
+      "id": "NS002",
+      "category": "slides",
+      "severity": "warn",
+      "files": ["**/*.html"],
+      "whenFileMatches": "class=\"deck\"|slides/slide\\.css",
+      "pattern": "style=\"[^\"]*font-size:\\s*\\d+px",
+      "description": "スライド内でpx指定のインラインfont-sizeを使っている。スライドはem基準で拡縮するためpx指定は画面サイズ追従を壊す",
+      "alternative": "em単位で指定する(本文=1em基準)か、.small/.slide-kicker等の用意されたクラスを使う"
+    },
+    {
+      "id": "NS003",
+      "category": "slides",
+      "severity": "error",
+      "files": ["**/*.html"],
+      "type": "missing-pattern",
+      "ifPattern": "slides/slide\\.css",
+      "mustMatch": "class=\"deck\"",
+      "description": "slide.cssを読み込んでいるのに<body class=\"deck\">がない。scroll-snapとページ番号カウンターが機能しない",
+      "alternative": "<body class=\"deck\"> にする"
+    }
+  ]
+}

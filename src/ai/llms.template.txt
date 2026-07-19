@@ -1,0 +1,67 @@
+# @nakagater/ui {{VERSION}} — AI reference
+
+shadcn/uiベースの個人デザインシステム。ビルド済みReactコンポーネント(Tailwind v4前提)と、同じデザイントークンを使うフレームワーク非依存の16:9スライドCSSを提供する。
+
+## Wiring (required)
+
+利用側のglobals.css / index.cssに次の3行が必要:
+
+```css
+@import "tailwindcss";
+@import "@nakagater/ui/theme.css";
+@source "../node_modules/@nakagater/ui/dist";
+```
+
+**@source行がないとコンポーネントのCSSが一切生成されない**(Tailwind v4はnode_modulesをスキャンしない。パスはCSSファイルからの相対)。ダークモードは `<html class="dark">` で切替。
+
+## Importing
+
+必ずルートからimportする。dist/へのdeep importは禁止。
+
+```tsx
+import { Button, Card, CardContent, cn } from "@nakagater/ui";
+```
+
+## Components
+
+{{COMPONENTS_TABLE}}
+
+正確なvariant/size/props/用例: node_modules/@nakagater/ui/dist/ai/components.json
+
+## Design tokens
+
+色は必ずトークンユーティリティで指定する(bg-primary, text-muted-foreground, border-border 等)。hex直書き・任意値カラー・Tailwindパレット色は使わない。light/darkの実値は自動で切り替わる。
+
+トークン名: {{TOKEN_NAMES}}
+
+実値(light/dark): node_modules/@nakagater/ui/dist/ai/tokens.json
+
+## Slides (pure HTML/CSS)
+
+Reactもビルドも不要。`<section class="slide">`を`<body class="deck">`に並べるだけで16:9スライドになる。印刷→PDF保存で資料化。
+
+```html
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@nakagater/ui@{{VERSION}}/dist/slides/slide.css">
+<!-- バージョンは必ず固定する。オフライン単一ファイルにするならslide.cssの中身を<style>に貼る -->
+```
+
+クラス一覧:
+
+{{SLIDES_TABLE}}
+
+文字サイズ・余白はem基準(本文=1em)でスライド幅に比例して拡縮する。pxのインラインfont-sizeは使わない。雛形: node_modules/@nakagater/ui/dist/slides/template.html
+
+## Prohibited patterns
+
+{{RULES_SUMMARY}}
+
+全ルール(regex detector付き): node_modules/@nakagater/ui/dist/ai/rules.json
+
+## Check
+
+UI/スライドのファイルを書いたら検証する:
+
+```bash
+npx --no-install nakag-ui check <files...>   # exit 1 = errorあり。修正してから完了とする
+```

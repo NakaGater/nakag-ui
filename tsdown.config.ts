@@ -1,7 +1,7 @@
 import { defineConfig } from "tsdown";
 
 export default defineConfig({
-  entry: ["src/index.ts"],
+  entry: ["src/index.ts", "src/cli/index.ts"],
   format: "esm",
   dts: true,
   // Keep one output module per source file so each component's "use client"

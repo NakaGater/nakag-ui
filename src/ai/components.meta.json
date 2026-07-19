@@ -1,0 +1,70 @@
+{
+  "badge": {
+    "description": "ステータスやカテゴリを示す小型ラベル",
+    "usage": "<Badge variant=\"secondary\">New</Badge>"
+  },
+  "button": {
+    "description": "ボタン。variantで階層(主/副/破壊的/軽量)、sizeで大きさを切り替える",
+    "usage": "<Button variant=\"outline\" size=\"sm\">保存</Button>",
+    "notes": "アイコンのみの場合は size=\"icon\" + aria-label 必須。リンク化は asChild で <a> をラップ"
+  },
+  "card": {
+    "description": "コンテンツのグルーピング。Header/Title/Description/Action/Content/Footerで構成",
+    "usage": "<Card><CardHeader><CardTitle>設定</CardTitle></CardHeader><CardContent>…</CardContent></Card>"
+  },
+  "checkbox": {
+    "description": "チェックボックス。Labelと組み合わせて使う",
+    "usage": "<Checkbox id=\"terms\" /><Label htmlFor=\"terms\">同意する</Label>"
+  },
+  "dialog": {
+    "description": "モーダルダイアログ。確認・入力・詳細表示に使う",
+    "usage": "<Dialog><DialogTrigger asChild><Button>開く</Button></DialogTrigger><DialogContent><DialogHeader><DialogTitle>確認</DialogTitle></DialogHeader></DialogContent></Dialog>",
+    "notes": "DialogContent内にDialogTitleが必須(a11y)。非表示にしたい場合もsr-onlyで置く"
+  },
+  "dropdown-menu": {
+    "description": "ドロップダウンメニュー。アクション一覧・コンテキストメニューに使う",
+    "usage": "<DropdownMenu><DropdownMenuTrigger asChild><Button variant=\"outline\">メニュー</Button></DropdownMenuTrigger><DropdownMenuContent><DropdownMenuItem>編集</DropdownMenuItem></DropdownMenuContent></DropdownMenu>"
+  },
+  "input": {
+    "description": "1行テキスト入力",
+    "usage": "<Input type=\"email\" placeholder=\"you@example.com\" />"
+  },
+  "label": {
+    "description": "フォームコントロールのラベル。htmlForで対象と紐付ける",
+    "usage": "<Label htmlFor=\"email\">メールアドレス</Label>"
+  },
+  "select": {
+    "description": "選択リスト。Trigger+Value+Content+Itemで構成",
+    "usage": "<Select><SelectTrigger className=\"w-56\"><SelectValue placeholder=\"選択\" /></SelectTrigger><SelectContent><SelectItem value=\"a\">A</SelectItem></SelectContent></Select>"
+  },
+  "separator": {
+    "description": "区切り線。orientation=\"vertical\"で縦にもできる",
+    "usage": "<Separator className=\"my-4\" />"
+  },
+  "skeleton": {
+    "description": "ローディング中のプレースホルダ。sizeはclassNameで指定",
+    "usage": "<Skeleton className=\"h-4 w-40\" />"
+  },
+  "sonner": {
+    "description": "トースト通知。アプリルートに<Toaster />を1つ置き、toast()で発火",
+    "usage": "<Toaster />  /* 発火側: import { toast } from \"sonner\"; toast(\"保存しました\") */",
+    "notes": "toast関数はsonnerパッケージから直接importする"
+  },
+  "switch": {
+    "description": "オン/オフのトグルスイッチ",
+    "usage": "<Switch id=\"airplane\" /><Label htmlFor=\"airplane\">機内モード</Label>"
+  },
+  "tabs": {
+    "description": "タブ切り替え。Tabs+TabsList+TabsTrigger+TabsContentで構成",
+    "usage": "<Tabs defaultValue=\"a\"><TabsList><TabsTrigger value=\"a\">A</TabsTrigger></TabsList><TabsContent value=\"a\">…</TabsContent></Tabs>"
+  },
+  "textarea": {
+    "description": "複数行テキスト入力",
+    "usage": "<Textarea placeholder=\"メッセージ\" />"
+  },
+  "tooltip": {
+    "description": "ホバー時の補足表示。上位にTooltipProviderが必要",
+    "usage": "<TooltipProvider><Tooltip><TooltipTrigger asChild><Button variant=\"outline\">?</Button></TooltipTrigger><TooltipContent>説明</TooltipContent></Tooltip></TooltipProvider>",
+    "notes": "アプリ全体で使うならルートにTooltipProviderを1つ置く"
+  }
+}

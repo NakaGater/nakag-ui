@@ -34,6 +34,8 @@ jobs:
       - run: pnpm build-storybook
       # Slide preview alongside the Storybook catalog: /slides/template.html
       - run: cp -r dist/slides storybook-static/slides
+      # AI reference at the llms.txt convention path + machine-readable manifests
+      - run: cp dist/llms.txt storybook-static/llms.txt && cp -r dist/ai storybook-static/ai
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
