@@ -2,6 +2,8 @@
 
 shadcn/ui ベースの個人用デザインシステム。ビルド済み React コンポーネント (Tailwind v4 前提) と、同じデザイントークンを使うフレームワーク非依存のスライド CSS を配布します。
 
+**プレビュー**: [コンポーネントカタログ (Storybook)](https://nakagater.github.io/nakag-ui/) / [スライドテンプレート](https://nakagater.github.io/nakag-ui/slides/template.html)
+
 ## インストール (アプリ)
 
 ```bash
